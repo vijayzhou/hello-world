@@ -1,0 +1,63 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<title></title>
+	<script src="http://code.jquery.com/jquery-1.4.1.min.js"></script>
+	<script type="text/javascript">
+	    String.prototype.queryString = function (name) {
+	        var reg = new RegExp("[\?\&]" + name + "=([^\&]+)", "i"), r = this.match(reg);
+	        return r !== null ? unescape(r[1]) : null;
+	    };
+    </script>
+    
+    <script type="text/javascript" charset="utf-8">
+
+		var lineLink = location.href.split("&")[0];
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+		window.shareData = {
+				"sendFriendLink": lineLink,
+				"fTitle": " ",
+				"fContent": "",
+			};
+
+			// 发送给好友
+			WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+				WeixinJSBridge.invoke('sendAppMessage', {
+					"img_url": "http://112.74.195.157/WeiXin/pic.jpg",
+					"img_width": "401",
+					"img_height": "275",					
+					"link": window.shareData.sendFriendLink,
+					"desc": window.shareData.fContent,
+					"title": window.shareData.fTitle
+				}, function (res) {
+					_report('send_msg', res.err_msg);
+				})
+			});
+		}, false)
+	</script>
+    <style type="text/css">
+		body {
+			margin:0;
+			background-repeat: repeat;
+		}
+		#img{
+			width:100%;
+			height:100%;
+		}
+	</style>
+</head>
+
+<body>
+ 
+ <img id="img" src="http://112.74.195.157/WeiXin/pic.jpg"/>
+
+</body>
+
+</html>
+
+
+
+
